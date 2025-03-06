@@ -1,76 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> <!-- BEGIN STYLING, META INFO -->
     <meta name = "viewport" content = "width = device - width, initial - scale = 1.0">
-    <title>Raspberry Pi Frontend</title>
+    <title>Raspberry Pi Frontend</title> <!-- Website tab title -->
     <link rel="icon" type="image/gif" href="https://c.tenor.com/sy9I8BjGEbcAAAAi/pepe-lightsaber.gif" />
 
     <style>
-        :root
-        {
-            --global-margin: 10px;
-            position: relative;
-        }
 
         body
         {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 'Noto Sans', Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
-
-        h1
+        h1, h2
         {
-            line-height: 25px;
-        }
-
-        h2
-        {
-            line-height: 17px;
+            line-height: 1.15em;
         }
 
         .title-bar
         {
             text-align: center;
-            padding: 15px;
-            border: 3px solid var(--background-light);
+            padding: 8px;
             border-radius: 5px;
-            transition: border-color 200ms ease;
             background: var(--background-light);
         }
-        .title-bar:hover
+
+        /* Website layout */
+        .container
         {
-            border-color: var(--accent);
+            display: flex;
+            height: 74vh;
+            margin-top: 8px;
+        }
+        .left-column, .right-column
+        {
+            display: block;
+            padding: 8px;
+            border-radius: 5px;
+            background: var(--background-light);
+        }
+        .left-column
+        {
+            width: 40%;
+            margin-right: 8px;
+        }
+        .right-column
+        {
+            width: 60%;
+        }
+        .footer
+        {
+            text-align: center;
+            padding: 8px;
         }
 
-        /* Colour Theming */
+        /* Colour Theming: default is dark */
         .theme
         {
+            color-scheme: dark;
             background: #232323;
+            --background: #232323;
             --background-light: #323232;
             --button: #646464;
             color: #FBFBFD;
+            --color: #FBFBFD;
             --accent: #305AEE;
             --highlight-text: #FBFBFD;
         }
 
         /* Changes theme to light if the browser is set to light mode */
-        @media (prefers-color-scheme: light)
-        {
+        @media (prefers-color-scheme: light) {
             .theme.adaptive
             {
+                color-scheme: light;
                 background: #EEEFF0;
+                --background: #EEEFF0;
                 --background-light: #FEFFFF;
                 --button: #DDDFE1;
                 color: #232323;
+                --color: #232323;
                 --accent: #305AEE;
                 --highlight-text: #FBFBFD;
             }
         }
 
+        /* Catch mobile users */
+        @media (orientation: portrait)
+        {
+            /*.title-bar
+            {
+                margin-right: 0px;
+            }*/
+            .container
+            {
+                display: flex;
+                flex-direction: column;
+                margin-right: 16px;
+                gap: 8px;
+
+            }
+            .left-column, .right-column { width: 100%; }
+            .right-column { order: 1; }
+            .left-column { order: 2; }
+        }
+
     </style>
-</head>
+</head> <!-- END -->
+
+<!-- BEGIN WEBSITE HTML -->
 <body class="theme adaptive">
+
     <header class="title-bar">
-        <h1>Placeholder Text</h1>
+        <h1>Medicine Temperature Monitor</h1>
         <p>Riley Tinkl, Rylan Peebles, Theo Patrick</p>
     </header>
+
+    <main class="container">
+
+        <section class="left-column">
+            <h2>Configuration</h2>
+        </section>
+
+        <section class="right-column">
+            <h2>Current Status</h2>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>Team 9, ENGR 120, 2025</p>
+    </footer>
+
 </body>
+</html>
+<!-- END WEBSITE HTML -->
