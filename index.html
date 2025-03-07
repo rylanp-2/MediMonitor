@@ -7,6 +7,13 @@
 
     <style>
 
+        :root
+        {
+            --negative: #da4453;
+            --neutral: #f67400;
+            --positive: #27ae60;
+            --accent: #305AEE;
+        }
         body
         {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 'Noto Sans', Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -14,6 +21,10 @@
         h1, h2
         {
             line-height: 1.15em;
+        }
+        h2
+        {
+            margin-left: 8px;
         }
 
         .title-bar
@@ -47,6 +58,19 @@
         {
             width: 60%;
         }
+        .left-box
+        {
+            display: flexbox;
+            padding: 8px;
+            border-radius: 5px;
+            background: var(--background);
+            border: 2px solid var(--button);
+            transition: border-color 200ms ease;
+        }
+        .left-box:hover
+        {
+            border-color: var(--accent);
+        }
         .footer
         {
             text-align: center;
@@ -63,8 +87,7 @@
             --button: #646464;
             color: #FBFBFD;
             --color: #FBFBFD;
-            --accent: #305AEE;
-            --highlight-text: #FBFBFD;
+            --inactive: #a0a0a0;
         }
 
         /* Changes theme to light if the browser is set to light mode */
@@ -78,8 +101,7 @@
                 --button: #DDDFE1;
                 color: #232323;
                 --color: #232323;
-                --accent: #305AEE;
-                --highlight-text: #FBFBFD;
+                --inactive: #787878;
             }
         }
 
@@ -118,6 +140,9 @@
 
         <section class="left-column">
             <h2>Configuration</h2>
+            <section class="left-box">
+                <p>Configure data goes here</p>
+            </section>
         </section>
 
         <section class="right-column">
