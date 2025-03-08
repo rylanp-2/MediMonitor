@@ -1,134 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> <!-- BEGIN STYLING, META INFO -->
-    <meta name = "viewport" content = "width = device - width, initial - scale = 1.0">
+<head>
+    <meta name = "viewport" content = "width = device - width, initial - scale = 1.0" />
     <title>Raspberry Pi Frontend</title> <!-- Website tab title -->
     <link rel="icon" type="image/gif" href="https://c.tenor.com/sy9I8BjGEbcAAAAi/pepe-lightsaber.gif" />
+    <script src="script.js" defer> </script>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-    <style>
-
-        :root
-        {
-            --negative: #da4453;
-            --neutral: #f67400;
-            --positive: #27ae60;
-            --accent: #305AEE;
-        }
-        body
-        {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 'Noto Sans', Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        h1, h2
-        {
-            line-height: 1.15em;
-        }
-        h2
-        {
-            margin-left: 8px;
-        }
-
-        .title-bar
-        {
-            text-align: center;
-            padding: 8px;
-            border-radius: 5px;
-            background: var(--background-light);
-        }
-
-        /* Website layout */
-        .container
-        {
-            display: flex;
-            height: 74vh;
-            margin-top: 8px;
-        }
-        .left-column, .right-column
-        {
-            display: block;
-            padding: 8px;
-            border-radius: 5px;
-            background: var(--background-light);
-        }
-        .left-column
-        {
-            width: 40%;
-            margin-right: 8px;
-        }
-        .right-column
-        {
-            width: 60%;
-        }
-        .left-box
-        {
-            display: flexbox;
-            padding: 8px;
-            border-radius: 5px;
-            background: var(--background);
-            border: 2px solid var(--button);
-            transition: border-color 200ms ease;
-        }
-        .left-box:hover
-        {
-            border-color: var(--accent);
-        }
-        .footer
-        {
-            text-align: center;
-            padding: 8px;
-        }
-
-        /* Colour Theming: default is dark */
-        .theme
-        {
-            color-scheme: dark;
-            background: #232323;
-            --background: #232323;
-            --background-light: #323232;
-            --button: #646464;
-            color: #FBFBFD;
-            --color: #FBFBFD;
-            --inactive: #a0a0a0;
-        }
-
-        /* Changes theme to light if the browser is set to light mode */
-        @media (prefers-color-scheme: light) {
-            .theme.adaptive
-            {
-                color-scheme: light;
-                background: #EEEFF0;
-                --background: #EEEFF0;
-                --background-light: #FEFFFF;
-                --button: #DDDFE1;
-                color: #232323;
-                --color: #232323;
-                --inactive: #787878;
-            }
-        }
-
-        /* Catch mobile users */
-        @media (orientation: portrait)
-        {
-            /*.title-bar
-            {
-                margin-right: 0px;
-            }*/
-            .container
-            {
-                display: flex;
-                flex-direction: column;
-                margin-right: 16px;
-                gap: 8px;
-
-            }
-            .left-column, .right-column { width: 100%; }
-            .right-column { order: 1; }
-            .left-column { order: 2; }
-        }
-
-    </style>
-</head> <!-- END -->
-
-<!-- BEGIN WEBSITE HTML -->
 <body class="theme adaptive">
 
     <header class="title-bar">
@@ -140,9 +19,19 @@
 
         <section class="left-column">
             <h2>Configuration</h2>
-            <section class="left-box">
+            <form class="left-box">
                 <p>Configure data goes here</p>
-            </section>
+                <label for="temp-upper">Upper temperature limit:</label>
+                <input type="number" id="temp-input" name="temp-upper" min="-30" max="30" value="4" placeholder="Celcius" required />
+                <span class="validity"></span>
+                <br>
+                <label for="temp-lower">Lower temparature limit:</label>
+                <input type="number" id="temp-input" name="temp-lower" min="-30" max="30" value="0" placeholder="Celcius" required />
+                <span class="validity"></span>
+                <br>
+                <input type="submit" id="button" value="Confirm"/><br>
+
+            </form>
         </section>
 
         <section class="right-column">
@@ -157,4 +46,3 @@
 
 </body>
 </html>
-<!-- END WEBSITE HTML -->
