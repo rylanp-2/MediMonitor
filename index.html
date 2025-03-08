@@ -1,48 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta name = "viewport" content = "width = device - width, initial - scale = 1.0" />
-    <title>Raspberry Pi Frontend</title> <!-- Website tab title -->
-    <link rel="icon" type="image/gif" href="https://c.tenor.com/sy9I8BjGEbcAAAAi/pepe-lightsaber.gif" />
-    <script src="script.js" defer> </script>
+  <head>
+    <meta
+      name="viewport"
+      content="width = device - width, initial - scale = 1.0"
+    />
+    <title>Raspberry Pi Frontend</title>
+    <link
+      rel="icon"
+      type="image/gif"
+      href="https://c.tenor.com/sy9I8BjGEbcAAAAi/pepe-lightsaber.gif"
+    />
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css" />
-</head>
+  </head>
 
-<body class="theme adaptive">
-
+  <body class="theme adaptive">
     <header class="title-bar">
-        <h1>Medicine Temperature Monitor</h1>
-        <p>Riley Tinkl, Rylan Peebles, Theo Patrick</p>
+      <h1>Medicine Temperature Monitor</h1>
+      <p>Riley Tinkl, Rylan Peebles, Theo Patrick</p>
     </header>
 
     <main class="container">
+      <section class="left-column">
+        <h2>Configuration</h2>
+        <form class="form-area">
+          <label for="temp-upper">Upper temperature limit:</label>
+          <input
+            type="number"
+            id="temp-input"
+            name="temp-upper"
+            min="-30"
+            max="30"
+            value="4"
+            placeholder="°C"
+            required
+          />
+          <span class="validity"></span>
+          <br />
+          <label for="temp-lower">Lower temparature limit:</label>
+          <input
+            type="number"
+            id="temp-input"
+            name="temp-lower"
+            min="-30"
+            max="30"
+            value="0"
+            placeholder="°C"
+            required
+          />
+          <span class="validity"></span>
+          <br />
+          <input type="submit" id="button" value="Confirm" />
+        </form>
+      </section>
 
-        <section class="left-column">
-            <h2>Configuration</h2>
-            <form class="left-box">
-                <p>Configure data goes here</p>
-                <label for="temp-upper">Upper temperature limit:</label>
-                <input type="number" id="temp-input" name="temp-upper" min="-30" max="30" value="4" placeholder="Celcius" required />
-                <span class="validity"></span>
-                <br>
-                <label for="temp-lower">Lower temparature limit:</label>
-                <input type="number" id="temp-input" name="temp-lower" min="-30" max="30" value="0" placeholder="Celcius" required />
-                <span class="validity"></span>
-                <br>
-                <input type="submit" id="button" value="Confirm"/><br>
-
-            </form>
-        </section>
-
-        <section class="right-column">
-            <h2>Current Status</h2>
-        </section>
-
+      <section class="right-column">
+        <h2>Current Status</h2>
+      </section>
     </main>
 
     <footer class="footer">
-        <p>Team 9, ENGR 120, 2025</p>
+      <p>Team 9, ENGR 120, 2025</p>
     </footer>
-
-</body>
+  </body>
 </html>
