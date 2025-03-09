@@ -20,6 +20,7 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+  overflow-y: auto-fit;
 }
 
 h1,
@@ -35,6 +36,12 @@ br {
   margin-bottom: 1.15em;
 }
 
+.tooltip {
+  text-align: center;
+  color: var(--inactive);
+  font-size: 10pt;
+}
+
 .title-bar {
   text-align: center;
   padding: 8px;
@@ -46,12 +53,13 @@ br {
 .container {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
-  height: 74vh;
+  grid-template-rows: auto 1fr auto;
+  height: 82vh;
   margin-top: 8px;
   grid-template-areas:
     "top right"
-    "bottom right";
+    "bottom right"
+    "footer footer";
   gap: 8px;
 }
 
@@ -61,7 +69,7 @@ br {
   padding: 8px;
   border-radius: 5px;
   background: var(--background-light);
-  min-height: 100px;
+  min-height: 200px;
 }
 
 .upper-left-column {
@@ -74,11 +82,14 @@ br {
 
 .lower-left-column {
   grid-area: bottom;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {
   text-align: center;
   padding: 8px;
+  grid-area: footer;
 }
 
 .form-area {
@@ -88,6 +99,15 @@ br {
   border: 2px solid var(--button);
   min-width: 325px;
   max-width: 375px;
+}
+
+.fill-height {
+  flex-grow: 1;
+}
+
+.scroll-y {
+  scroll-behavior: smooth;
+  overflow-y: auto;
 }
 
 /* END */
@@ -201,8 +221,8 @@ input:valid + span::after {
 }
 /* END */
 
-/* BEGIN Catch mobile users */
-@media (orientation: portrait) {
+/* BEGIN Catch Phone users */
+@media (orientation: portrait) and (max-width: 777px) {
   .container {
     display: flex;
     flex-direction: column;
@@ -222,10 +242,20 @@ input:valid + span::after {
 
   .upper-left-column {
     order: 3;
+    height: 240px;
   }
 
   .lower-left-column {
     order: 2;
   }
+
+  .footer {
+    order: 4;
+  }
+  body {
+    overflow-y: unset;
+  }
 }
 /* END */
+
+/* BEGIN Catch Tablet users */
