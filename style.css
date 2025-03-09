@@ -4,6 +4,7 @@
   --neutral: #f67400;
   --positive: #27ae60;
   --accent: #305aee;
+  --global-spacing: 8px;
 }
 
 /* BEGIN Section Formatting */
@@ -24,27 +25,39 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   line-height: 1.15em;
 }
 
-h2 {
-  margin-left: 8px;
+h2,
+h3 {
+  margin-left: var(--global-spacing);
 }
 
 br {
   margin-bottom: 1.15em;
 }
 
-.tooltip {
+.top-hover,
+.bottom-hover {
   text-align: center;
   color: var(--inactive);
   font-size: 10pt;
+  position: sticky;
+}
+
+.top-hover {
+  top: 0px;
+}
+
+.bottom-hover {
+  bottom: 0px;
 }
 
 .title-bar {
   text-align: center;
-  padding: 8px;
+  padding: var(--global-spacing);
   border-radius: 5px;
   background: var(--background-light);
 }
@@ -55,18 +68,18 @@ br {
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
   height: 82vh;
-  margin-top: 8px;
+  margin-top: var(--global-spacing);
   grid-template-areas:
     "top right"
     "bottom right"
     "footer footer";
-  gap: 8px;
+  gap: var(--global-spacing);
 }
 
 .upper-left-column,
 .right-column,
 .lower-left-column {
-  padding: 8px;
+  padding: var(--global-spacing);
   border-radius: 5px;
   background: var(--background-light);
   min-height: 200px;
@@ -88,12 +101,13 @@ br {
 
 .footer {
   text-align: center;
-  padding: 8px;
+  padding: var(--global-spacing);
   grid-area: footer;
+  max-height: 70px;
 }
 
 .form-area {
-  padding: 8px;
+  padding: var(--global-spacing);
   border-radius: 5px;
   background: var(--background);
   border: 2px solid var(--button);
@@ -227,7 +241,7 @@ input:valid + span::after {
     display: flex;
     flex-direction: column;
     margin-right: 16px;
-    gap: 8px;
+    gap: var(--global-spacing);
   }
 
   .upper-left-column,
@@ -259,3 +273,4 @@ input:valid + span::after {
 /* END */
 
 /* BEGIN Catch Tablet users */
+/* TODO: implement theming to prevent awkward spacing between portrait and full landscape mode */
