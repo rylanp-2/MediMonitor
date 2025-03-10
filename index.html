@@ -96,17 +96,19 @@
             </h3>
           </div>
         </section>
-        <section class="form-area debug fill-height">
-          <p>
-            🛜 No connection to the Pi found! Ensure you are connected to the
-            device and refresh the page.
-          </p>
-          <p>Retrying in...</p>
+        <section class="debug-container fill-height">
+          <section class="form-area debug scroll-y">
+            <p>
+              🛜 No connection to the Pi found! Ensure you are connected to the
+              device and refresh the page.
+            </p>
+            <p>Retrying in...</p>
+          </section>
         </section>
-        <div class="form-area" style="margin-top: var(--global-spacing)">
+        <small class="form-area debug-toggle">
           <input type="checkbox" id="debug-toggle" name="debug-toggle" />
           <label for="debug-toggle">Debug Toggle</label>
-        </div>
+        </small>
       </section>
       <footer class="footer">
         <p>Team 9, ENGR 120, 2025</p>

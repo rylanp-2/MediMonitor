@@ -4,11 +4,9 @@ const debugSection = document.querySelector(".debug");
 
 function showDebug() {
   if (debugToggle.checked) {
-    debugSection.style.opacity = "1";
-    debugSection.style.height = "auto";
+    debugSection.classList.add("active");
   } else {
-    debugSection.style.opacity = "0";
-    debugSection.style.height = "0";
+    debugSection.classList.remove("active");
   }
 }
 
