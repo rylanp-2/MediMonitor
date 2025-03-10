@@ -102,12 +102,6 @@ br {
   max-height: 70px;
 }
 
-.status-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .form-area {
   padding: var(--global-spacing);
   border-radius: 5px;
@@ -129,6 +123,12 @@ br {
 /* END */
 
 /* BEGIN Status types */
+
+.status-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .status::before {
   color: var(--highlight);
@@ -157,6 +157,7 @@ br {
 }
 
 /* END */
+/* TODO: implement classes "status-temperature", "status-humidity" */
 
 /* BEGIN debug goodies */
 
@@ -317,6 +318,7 @@ input:valid + span::after {
 }
 /* END */
 
+/* TODO: fix mobile theming */
 /* BEGIN Catch Phone users */
 @media screen and (orientation: portrait) and (max-width: 777px) {
   .container {
