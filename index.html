@@ -56,6 +56,7 @@
             />
             <span class="validity"></span>
           </div>
+          <!-- Having the actual unicode character (°C), and html character (&#8451;) for some reason allows chrome to render properly. lord knows why -->
           <input
             type="submit"
             id="button"
@@ -75,16 +76,37 @@
           <p>ipsum</p>
           <br />
           <p>dolor</p>
-          <p class="bottom-hover">scroll to view content</p>
+          <small class="bottom-hover">scroll to view content</small>
         </section>
       </section>
 
       <section class="right-column">
-        <h2>Current Status</h2>
-        <div class="status">
-          <h3>(status)</h3>
+        <h2 style="margin-bottom: 0px">Current Status</h2>
+        <section class="status-area">
+          <div class="status-group">
+            <h3>
+              <span class="stat-warn status"></span>
+              Temperature
+            </h3>
+          </div>
+          <div class="status-group">
+            <h3>
+              <span class="stat-warn status"></span>
+              Humidity
+            </h3>
+          </div>
+        </section>
+        <section class="form-area debug fill-height">
+          <p>
+            🛜 No connection to the Pi found! Ensure you are connected to the
+            device and refresh the page.
+          </p>
+          <p>Retrying in...</p>
+        </section>
+        <div class="form-area" style="margin-top: var(--global-spacing)">
+          <input type="checkbox" id="debug-toggle" name="debug-toggle" />
+          <label for="debug-toggle">Debug Toggle</label>
         </div>
-        <h3>For:</h3>
       </section>
       <footer class="footer">
         <p>Team 9, ENGR 120, 2025</p>

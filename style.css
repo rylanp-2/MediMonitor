@@ -40,20 +40,13 @@ br {
   margin-bottom: 1.15em;
 }
 
-.top-hover,
 .bottom-hover {
   text-align: center;
   color: var(--inactive);
   font-size: 10pt;
   position: sticky;
-}
-
-.top-hover {
-  top: 0px;
-}
-
-.bottom-hover {
   bottom: 0px;
+  background: var(--background);
 }
 
 .title-bar {
@@ -92,6 +85,8 @@ br {
 
 .right-column {
   grid-area: right;
+  display: flex;
+  flex-direction: column;
 }
 
 .lower-left-column {
@@ -105,6 +100,12 @@ br {
   padding: var(--global-spacing);
   grid-area: footer;
   max-height: 70px;
+}
+
+.status-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .form-area {
@@ -125,6 +126,46 @@ br {
   overflow-y: auto;
 }
 
+/* END */
+
+/* BEGIN Status types */
+
+.status::before {
+  color: var(--highlight);
+  border-radius: 5pt;
+  padding: 2px 5px;
+  margin-right: var(--global-spacing);
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  font-size: inherit;
+}
+
+.stat-good::before {
+  background: var(--positive);
+  content: "✓";
+}
+
+.stat-warn::before {
+  background: var(--neutral);
+  content: "⚠";
+}
+
+.stat-bad::before {
+  background: var(--negative);
+  content: "✖";
+}
+
+.debug {
+  opacity: 0;
+  height: 0;
+  transition: height 300ms ease;
+}
+
+input:checked ~ .debug-check .debug {
+  opacity: 1;
+  height: auto;
+}
 /* END */
 
 /* BEGIN Input handling */
@@ -166,10 +207,6 @@ br {
   text-align: left;
 }
 
-/*.form-group input {
-  flex: 0.5;
-}*/
-
 input {
   background-color: var(--background);
   border: 1px solid var(--button);
@@ -195,7 +232,7 @@ input:invalid {
 
 input:invalid + span::after {
   content: "✖";
-  padding-left: 5px;
+  padding-left: var(--global-spacing);
   color: var(--negative);
   float: right;
   animation: wiggle-jiggle 200ms ease-in-out;
@@ -207,7 +244,7 @@ input:invalid {
 
 input:valid + span::after {
   content: "✓";
-  padding-left: 5px;
+  padding-left: var(--global-spacing);
   color: var(--positive);
   float: right;
 }
