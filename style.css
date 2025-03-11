@@ -148,7 +148,7 @@ br {
 
 .stat-warn::before {
   background: var(--neutral);
-  content: "⚠";
+  content: "!!!";
 }
 
 .stat-bad::before {
