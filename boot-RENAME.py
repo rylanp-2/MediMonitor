@@ -1,21 +1,24 @@
 # boot.py -- run on boot-up
 import network
+import machine
+import config
+
+led = machine.Pin(25, machine.Pin.OUT)
 
 # Replace the following with your WIFI Credentials
 SSID = "MediMonitor"
-SSI_PASSWORD = "1234"
+PASSWORD = "1234"
 
+print("Creating Accesspoint with the following", SSID, PASSWORD)
 
-def do_connect():
-    sta_if = network.WLAN(network.STA_IF)
-    if not sta_if.isconnected():
-        print("connecting to network...")
-        sta_if.active(True)
-        sta_if.connect(SSID, SSI_PASSWORD)
-        while not sta_if.isconnected():
-            pass
-    print("Connected! Network config:", sta_if.ifconfig())
+ap = network.WLAN(network.AP_IF)
+ap.config(essid=SSID, password=PASSWORD)
+ap.active(True)  # Activate the access point
 
+while ap.active() is False:
+    pass
+print("Connection is successful")
+print(ap.ifconfig())
+led.value(1)
 
-print("Connecting to your wifi...")
-do_connect()
+config.ip = ap.ifconfig()

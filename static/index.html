@@ -12,6 +12,9 @@
     <header class="title-bar">
       <h1>MediMonitor</h1>
       <p>Riley Tinkl, Rylan Peebles, Theo Patrick</p>
+      <noscript style="color: var(--negative)"
+        >You need to enable JavaScript to run this app.</noscript
+      >
     </header>
 
     <main class="container">
@@ -22,7 +25,7 @@
             <label for="temp-upper">Upper temperature limit:</label>
             <input
               type="number"
-              id="number-input"
+              id="temp-input-high"
               name="temp-upper"
               min="-30"
               max="30"
@@ -36,7 +39,7 @@
             <label for="temp-lower">Lower temperature limit:</label>
             <input
               type="number"
-              id="number-input"
+              id="temp-input-low"
               name="temp-lower"
               min="-30"
               max="30"
@@ -97,9 +100,18 @@
             <p>Retrying in...</p>
           </section>
         </section>
-        <small class="form-area debug-toggle">
+        <small
+          class="form-area form-group"
+          style="margin-bottom: auto; color: var(--inactive); margin-top: 8px"
+        >
           <input type="checkbox" id="debug-toggle" name="debug-toggle" />
           <label for="debug-toggle">Debug Toggle</label>
+          <input
+            type="button"
+            id="stop-server"
+            name="stop-server"
+            value="Stop Server"
+          />
         </small>
       </section>
       <footer class="footer">

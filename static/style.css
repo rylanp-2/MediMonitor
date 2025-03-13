@@ -156,8 +156,13 @@ br {
   content: "✖";
 }
 
+.status-humidity::before,
+.status-temperature::before {
+  content: "<?>";
+  padding-left: 2px;
+}
+
 /* END */
-/* TODO: implement classes "status-temperature", "status-humidity" */
 
 /* BEGIN debug goodies */
 
@@ -194,7 +199,8 @@ br {
 /* END */
 
 /* BEGIN Input handling */
-#number-input {
+#temp-input-high,
+#temp-input-low {
   width: 5em;
   float: right;
   margin-left: 4px;
@@ -284,9 +290,53 @@ input:valid + span::after {
   border-color: var(--accent);
 }
 
+#stop-server:focus {
+  outline-color: var(--negative);
+  border-color: var(--negative);
+  background: var(--negative);
+}
+
+#stop-server:hover {
+  outline-color: var(--negative);
+  border-color: var(--negative);
+}
+
 #debug-toggle:hover {
   cursor: pointer;
 }
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -2px;
+  border: 2px solid var(--button);
+  border-radius: 2px;
+  background: var(--background);
+  color: var(--highlight);
+}
+
+input[type="checkbox"]::before {
+  content: "✔";
+  position: absolute;
+  font-size: 1em;
+  top: -0.3em;
+  visibility: hidden;
+}
+
+input[type="checkbox"]:checked::before {
+  visibility: visible;
+}
+input[type="checkbox"]:checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+}
+
 /* END */
 
 /* BEGIN Colour theming */

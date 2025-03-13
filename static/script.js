@@ -16,6 +16,79 @@ window.addEventListener("load", showDebug);
 
 /* END */
 
+/* BEGIN Stop server button */
+document.getElementById("stop-server").addEventListener("click", function () {
+  if (
+    confirm(
+      "Are you sure you want to stop the server? It will need to be restarted manually.",
+    )
+  ) {
+    // TODO: placeholder
+    console.log("Server stopped");
+  }
+});
+
+/* END */
+
+/* BEGIN input handling */
+
+const inputTempHigh = document.getElementById("temp-input-high");
+const inputTempLow = document.getElementById("temp-input-low");
+
+// Reusable function for grabbing config values set by user
+function getTempConfig() {
+  let high = document.querySelector("#temp-input-high").valueAsNumber;
+  let low = document.querySelector("#temp-input-low").valueAsNumber;
+  return { low, high };
+}
+
+// Ensures the user inputs a valid temperature range before submission
+function tempRange() {
+  const temp = getTempConfig();
+
+  if (temp.low > temp.high) {
+    inputTempHigh.setCustomValidity(
+      "Number must be above the lower temperature",
+    );
+    inputTempLow.setCustomValidity(
+      "Number must be below the higher temperature",
+    );
+  } else {
+    inputTempHigh.setCustomValidity("");
+    inputTempLow.setCustomValidity("");
+  }
+  inputTempHigh.checkValidity();
+  inputTempLow.checkValidity();
+
+  // Ensure only the currently focused field displays validation errors
+  if (document.activeElement === inputTempHigh) {
+    inputTempHigh.reportValidity();
+  } else if (document.activeElement === inputTempLow) {
+    inputTempLow.reportValidity();
+  }
+}
+
+// Watches for changes
+tempRange();
+
+inputTempHigh.addEventListener("input", tempRange);
+inputTempLow.addEventListener("input", tempRange);
+
+// Capture config, send to the pi
+const configForm = document.querySelector(".form-area");
+
+configForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  temp = getTempConfig();
+
+  // TODO: placeholder for sending to pi
+  console.log("High:", temp.high);
+  console.log("Low:", temp.low);
+});
+
+/* END */
+
 /* BEGIN Websocket shenanigans */
 
 const statusTemperature = document.querySelector("status-temperature");
@@ -52,3 +125,4 @@ function onMessage(event) {
 function sendMessage(message) {
   websocket.send(message);
 }
+querySelector;
