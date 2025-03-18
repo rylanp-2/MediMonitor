@@ -1,13 +1,21 @@
 from microdot_asyncio import Microdot, Response, send_file
 from microdot_utemplate import render_template
 from microdot_asyncio_websocket import with_websocket
-
 import time
+import boot_RENAME as boot
+
 # import machine
 
 # Initialize MicroDot
 app = Microdot()
 Response.default_content_type = "text/html"
+
+
+# prints connections
+@app.before_request
+async def log_request(request):
+    # print("{request.client_addr} - {request.method} {request.path}")
+    boot.check_clients()
 
 
 # root route
@@ -18,11 +26,18 @@ async def index(request):
 
 @app.route("/ws")
 @with_websocket
-async def read_sensor(request, ws):
-    while True:
-        #         data = await ws.receive()
-        time.sleep(0.1)
-        await ws.send(str("Hello World!"))
+async def websocket_handler(request, ws):
+    print(f"WebSocket connection established: {request.client_addr}")
+
+    try:
+        while True:
+            message = await ws.receive()
+            print(f"Received message: {message}")
+            await ws.send(f"Echo: {message}")  # Echo received message
+    except Exception as e:
+        print(f"WebSocket error: {e}")
+    finally:
+        print(f"WebSocket closed: {request.client_addr}")
 
 
 # Static CSS/JSS
@@ -43,6 +58,6 @@ def shutdown(request):
 
 if __name__ == "__main__":
     try:
-        app.run()
-    except KeyboardInterrupt:
-        pass
+        app.run(debug=True, port=80)  # Serve on port 80
+    except Exception as e:
+        print(f"Server error: {e}")

@@ -17,6 +17,8 @@ window.addEventListener("load", showDebug);
 /* END */
 
 /* BEGIN Stop server button */
+var stopServer = false;
+
 document.getElementById("stop-server").addEventListener("click", function () {
   if (
     confirm(
@@ -24,7 +26,8 @@ document.getElementById("stop-server").addEventListener("click", function () {
     )
   ) {
     // TODO: placeholder
-    console.log("Server stopped");
+    console.log("Stopping Server");
+    stopServer = true;
   }
 });
 
@@ -99,7 +102,9 @@ var websocket;
 window.addEventListener("load", onLoad);
 
 function onLoad() {
-  initializeSocket();
+  if ((stopServer = false)) {
+    initializeSocket();
+  }
 }
 
 function initializeSocket() {
@@ -118,8 +123,9 @@ function onClose(event) {
 }
 function onMessage(event) {
   console.log("WebSocket message received:", event);
-  updateValues(event.data);
-  updateChart(event.data);
+  // updateValues(event.data);
+  // updateChart(event.data);
+  consile.log("Values:", event.data);
 }
 
 function sendMessage(message) {
