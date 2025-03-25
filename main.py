@@ -1,8 +1,9 @@
 from microdot_asyncio import Microdot, Response, send_file
 from microdot_utemplate import render_template
 from microdot_asyncio_websocket import with_websocket
-import time
+import asyncio
 import boot_RENAME as boot
+from Temperature_Sensing import read_temps
 
 # import machine
 
@@ -14,8 +15,7 @@ Response.default_content_type = "text/html"
 # prints connections
 @app.before_request
 async def log_request(request):
-    # print("{request.client_addr} - {request.method} {request.path}")
-    boot.check_clients()
+    print(f"{request.client_addr} - {request.method} {request.path}")
 
 
 # root route
@@ -24,6 +24,7 @@ async def index(request):
     return render_template("index.html")
 
 
+# websocket data handler
 @app.route("/ws")
 @with_websocket
 async def websocket_handler(request, ws):
@@ -31,9 +32,9 @@ async def websocket_handler(request, ws):
 
     try:
         while True:
-            message = await ws.receive()
-            print(f"Received message: {message}")
-            await ws.send(f"Echo: {message}")  # Echo received message
+            # temp1, temp2, temp3, avg_temp, hum, unix_time
+            await ws.send(read_temps())
+            await asyncio.sleep(2)
     except Exception as e:
         print(f"WebSocket error: {e}")
     finally:
@@ -52,8 +53,10 @@ def static(request, path):
 # shutdown
 @app.get("/shutdown")
 def shutdown(request):
+    boot.led.value(0)
     request.app.shutdown()
-    return "The server is shutting down..."
+    print("Server Shutdown")
+    return "Shutdown"
 
 
 if __name__ == "__main__":

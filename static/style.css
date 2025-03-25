@@ -158,7 +158,7 @@ br {
 
 .status-humidity::before,
 .status-temperature::before {
-  content: "<?>";
+  content: var(--status-content, "<?>");
   padding-left: 2px;
 }
 
@@ -306,7 +306,7 @@ input:valid + span::after {
 }
 
 input[type="checkbox"] {
-  appearance: none;
+  appearance: none; /* disables system theming */
   position: relative;
   width: 1.15em;
   height: 1.15em;

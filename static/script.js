@@ -25,9 +25,10 @@ document.getElementById("stop-server").addEventListener("click", function () {
       "Are you sure you want to stop the server? It will need to be restarted manually.",
     )
   ) {
-    // TODO: placeholder
     console.log("Stopping Server");
     stopServer = true;
+    window.location.href =
+      "/shutdown"; /* sends shutdown command to websocket server */
   }
 });
 
@@ -83,28 +84,30 @@ const configForm = document.querySelector(".form-area");
 configForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  temp = getTempConfig();
+  let temp = getTempConfig();
 
-  // TODO: placeholder for sending to pi
-  console.log("High:", temp.high);
-  console.log("Low:", temp.low);
+  if (websocket.readyState === WebSocket.OPEN) {
+    let data = JSON.stringify({ high: temp.high, low: temp.low });
+    websocket.send(data);
+    console.log("Sent to WebSocket:", data);
+  } else {
+    console.error("WebSocket is not open!");
+  }
 });
 
 /* END */
 
 /* BEGIN Websocket shenanigans */
 
-const statusTemperature = document.querySelector("status-temperature");
-const statusHumidity = document.querySelector("status-humidity");
+const statusTemperature = document.querySelector("#status-temperature");
+const statusHumidity = document.querySelector("#status-humidity");
 
 var targetUrl = `ws://${location.host}/ws`;
 var websocket;
 window.addEventListener("load", onLoad);
 
 function onLoad() {
-  if ((stopServer = false)) {
-    initializeSocket();
-  }
+  initializeSocket();
 }
 
 function initializeSocket() {
@@ -121,11 +124,25 @@ function onClose(event) {
   console.log("Closing connection to server..");
   setTimeout(initializeSocket, 2000);
 }
+
 function onMessage(event) {
   console.log("WebSocket message received:", event);
-  // updateValues(event.data);
-  // updateChart(event.data);
-  consile.log("Values:", event.data);
+
+  let values = event.data.split(", ");
+  // Individual Temperatures
+  // let temp1 = values[0].trim();
+  // let temp2 = values[1].trim();
+  // let temp3 = values[2].trim();
+  let avgTemp = parseFloat(values[3]) || 0;
+  let humidity = values[4].trim();
+  let unixTime = values[5].trim();
+
+  document.documentElement.style.setProperty("--status-content", `""`);
+  statusTemperature.textContent = avgTemp.toFixed(1) + " °C";
+  statusHumidity.textContent = humidity + "%";
+
+  console.log("Pi Time:", unixTime);
+  // console.log("Values:", event.data);
 }
 
 function sendMessage(message) {

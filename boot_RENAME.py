@@ -1,9 +1,11 @@
 # boot.py -- run on boot-up
 import network
-import machine
+from machine import Pin
 import config
 
-led = machine.Pin(25, machine.Pin.OUT)
+led = Pin("LED", Pin.OUT)
+
+# BEGIN basic networking
 
 # Replace the following with your WIFI Credentials
 SSID = "MediMonitor"
@@ -19,10 +21,12 @@ while not ap.active():
     pass
 
 print("Connection is successful")
-print(ap.ifconfig("addr4"))
+print(ap.ifconfig())
 led.value(1)
 
-config.ip = ap.ifconfig("addr4")[0]
+config.ip = ap.ifconfig()[0]
+
+# END
 
 
 # Monitor new connections
