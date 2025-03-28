@@ -4,20 +4,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raspberry Pi Frontend</title>
     <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
-    <script src="static/script.js" defer></script>
     <link rel="stylesheet" href="static/style.css" />
+    <script src="static/script.js" defer></script>
   </head>
 
   <body class="theme adaptive">
-    <header class="title-bar">
-      <h1>MediMonitor</h1>
-      <p>Riley Tinkl, Rylan Peebles, Theo Patrick</p>
-      <noscript style="color: var(--negative)">
-        You need to enable JavaScript to run this app.
-      </noscript>
-    </header>
-
     <main class="container">
+      <header class="title-bar">
+        <h1>MediMonitor</h1>
+        <p>Riley Tinkl, Rylan Peebles, Theo Patrick</p>
+        <noscript style="color: var(--negative)">
+          You need to enable JavaScript to run this app.
+        </noscript>
+      </header>
       <section class="upper-left-column">
         <h2>Device Configuration</h2>
         <form class="form-area fill-height">
@@ -78,26 +77,29 @@
         <section class="status-area">
           <div class="status-group">
             <h3>
-              <span class="stat-warn status"></span>
+              <span class="stat-warn status" id="stat-temp-icon"></span>
               Temperature:
               <span class="status-temperature" id="status-temperature"></span>
             </h3>
           </div>
           <div class="status-group">
             <h3>
-              <span class="stat-warn status"></span>
+              <span class="stat-warn status" id="stat-hum-icon"></span>
               Humidity:
               <span class="status-humidity" id="status-humidity"></span>
             </h3>
           </div>
         </section>
         <section class="debug-container fill-height">
-          <section class="form-area debug scroll-y">
-            <p>
-              🛜 No connection to the Pi found! Ensure you are connected to the
-              device and refresh the page.
+          <section class="form-area debug scroll-y fill-height">
+            <p id="not-connected">
+              No websocket connection to the Pi, will retry every 2 seconds.
             </p>
-            <p>Retrying in...</p>
+            <p id="t1" />
+            <p id="t2" />
+            <p id="t3" />
+            <p id="at" />
+            <p id="ut" />
           </section>
         </section>
         <small

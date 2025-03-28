@@ -3,13 +3,31 @@ from microdot_utemplate import render_template
 from microdot_asyncio_websocket import with_websocket
 import asyncio
 import boot_RENAME as boot
-from Temperature_Sensing import read_temps
+from read_temps import read_temps, convert_list
+from LEDs_test import LEDs
 
 # import machine
 
 # Initialize MicroDot
 app = Microdot()
 Response.default_content_type = "text/html"
+
+# Config
+
+global temp_range
+global has_config
+has_config = False
+
+with open("/static/config", "r") as config:
+    temp_range = config.read().strip()
+
+
+# Writes to file, which is picked up by other subprocesses
+def write_config(data):
+    with open("/static/config", "w") as config:
+        config.seek(0)
+        config.write(data + "\n")
+        config.append()
 
 
 # prints connections
@@ -29,12 +47,38 @@ async def index(request):
 @with_websocket
 async def websocket_handler(request, ws):
     print(f"WebSocket connection established: {request.client_addr}")
-
+    global temp_range
+    global has_config
     try:
         while True:
-            # temp1, temp2, temp3, avg_temp, hum, unix_time
-            await ws.send(read_temps())
-            await asyncio.sleep(2)
+            # Sends stored config range
+            if has_config is not True:
+                await ws.send("config, " + temp_range)
+                has_config = True
+
+            temp_data = read_temps()  # temp1, temp2, temp3, avg_temp, hum, unix_time
+            temp_data.append(
+                LEDs(temp_data[0], temp_data[1], temp_data[2])
+            )  # appends status (0-2)
+
+            await ws.send("data, " + convert_list(temp_data))
+            await asyncio.sleep(0.5)
+
+            # Attempt to receive data with a timeout
+            try:
+                new_temp_range = await asyncio.wait_for(ws.receive(), timeout=0.1)
+
+                if temp_range != new_temp_range:  # Ensure it's not the same
+                    print(
+                        "Recieved new range: " + new_temp_range + " Old: " + temp_range
+                    )
+
+                    temp_range = new_temp_range
+                    write_config(temp_range)  # Write to /static/config
+
+            except asyncio.TimeoutError:
+                pass  # No data received, continue loop
+
     except Exception as e:
         print(f"WebSocket error: {e}")
     finally:

@@ -54,20 +54,24 @@ br {
   padding: var(--global-spacing);
   border-radius: 5px;
   background: var(--background-light);
+  grid-area: header;
 }
 
 /* Website layout */
 .container {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr auto;
-  height: 82vh;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100vh;
   margin-top: var(--global-spacing);
   grid-template-areas:
+    "header header"
     "top right"
     "bottom right"
     "footer footer";
   gap: var(--global-spacing);
+  max-width: 1024px;
+  /*   margin: var(--global-spacing) auto; */
 }
 
 .upper-left-column,
@@ -168,17 +172,20 @@ br {
 
 .debug-container {
   display: flex;
+  flex-direction: column;
 }
 
 .debug {
   opacity: 0;
   max-height: 50px;
+  font-family: mono;
 }
 
 .debug.active {
   opacity: 1;
-  max-height: 500px;
+  max-height: inherit;
   animation: bounce-up 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: unset;
 }
 
 @keyframes bounce-up {
@@ -290,6 +297,11 @@ input:valid + span::after {
   border-color: var(--accent);
 }
 
+#button:invalid {
+  background-color: var(--negative);
+  border-color: var(--negative);
+}
+
 #stop-server:focus {
   outline-color: var(--negative);
   border-color: var(--negative);
@@ -368,14 +380,131 @@ input[type="checkbox"]:focus {
 }
 /* END */
 
-/* TODO: fix mobile theming */
+/* BEGIN Catch Tablet users */
+@media screen and (orientation: portrait) and (max-width: 753px) and (min-width: 551px) {
+  .container {
+    grid-template-areas:
+      "header header"
+      "right right"
+      "top bottom"
+      "footer bottom";
+    grid-template-rows: auto auto auto 1fr;
+    margin: unset;
+    margin-right: calc(2 * var(--global-spacing));
+    height: 98vh;
+  }
+
+  .title-bar {
+    margin-right: calc(-2 * var(--global-spacing));
+  }
+
+  /*   .upper-left-column, */
+  .lower-left-column {
+    width: 100%;
+  }
+
+  .right-column {
+    /*     order: 1; */
+    min-height: 224px;
+    margin-right: calc(-2 * var(--global-spacing));
+    display: grid;
+    grid-template-areas:
+      "title debug"
+      "status debug"
+      "toggle toggle";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto 1fr;
+
+    h2 {
+      grid-area: title;
+    }
+    .status-area {
+      grid-area: status;
+      min-width: 240px;
+    }
+    .debug-container {
+      grid-area: debug;
+      scroll-behavior: smooth;
+      overflow-y: auto;
+      margin-bottom: unset;
+      .form-area {
+        min-width: unset;
+        margin-bottom: unset;
+      }
+    }
+    .form-area {
+      grid-area: toggle;
+      margin-bottom: 16px;
+      max-width: unset;
+    }
+  }
+
+  .upper-left-column {
+    /*     height: 240px; */
+    min-width: 280px;
+    .form-area {
+      min-width: unset;
+      .form-group {
+        display: grid;
+        grid-template-areas:
+          "title title"
+          "input validity";
+        grid-template-columns: 1fr 35%;
+        grid-template-rows: auto 1fr;
+        row-gap: var(--global-spacing);
+
+        label {
+          grid-area: title;
+        }
+        input {
+          grid-area: input;
+          margin-left: unset !important;
+          place-self: end;
+          /*           width: 100% !important; */
+        }
+        .validity {
+          grid-area: validity;
+          margin-left: 4px;
+        }
+        span::after {
+          float: left;
+        }
+      }
+    }
+  }
+
+  .lower-left-column {
+    .form-area {
+      min-width: unset;
+      max-width: unset;
+    }
+  }
+
+  body {
+    overflow-y: unset;
+  }
+
+  .footer {
+    display: grid;
+    place-content: center;
+    max-height: unset;
+    min-height: 0px;
+  }
+}
+/* END */
+
 /* BEGIN Catch Phone users */
-@media screen and (orientation: portrait) and (max-width: 777px) {
+@media screen and (orientation: portrait) and (max-width: 550px) {
   .container {
     display: flex;
     flex-direction: column;
     margin-right: 16px;
+    height: unset;
     gap: var(--global-spacing);
+  }
+
+  .title-bar {
+    margin-right: calc(-2 * var(--global-spacing));
   }
 
   .upper-left-column,
@@ -385,12 +514,15 @@ input[type="checkbox"]:focus {
 
   .right-column {
     order: 1;
-    margin-right: -16px;
+    margin-right: calc(-2 * var(--global-spacing));
+
+    small {
+      margin-top: unset !important;
+    }
   }
 
   .upper-left-column {
     order: 3;
-    height: 240px;
   }
 
   .lower-left-column {
@@ -403,8 +535,17 @@ input[type="checkbox"]:focus {
   body {
     overflow-y: unset;
   }
+
+  .form-area {
+    min-width: unset;
+    max-width: unset;
+    max-height: 200px;
+  }
+
+  .debug {
+    max-height: 0px;
+    margin-top: calc(-3 * var(--global-spacing));
+    margin-bottom: var(--global-spacing);
+  }
 }
 /* END */
-
-/* BEGIN Catch Tablet users */
-/* TODO: implement theming to prevent awkward spacing between portrait and full landscape mode */
