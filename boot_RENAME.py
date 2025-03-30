@@ -1,7 +1,6 @@
 # boot.py -- run on boot-up
 import network
 from machine import Pin
-import config
 
 led = Pin("LED", Pin.OUT)
 
@@ -23,8 +22,6 @@ while not ap.active():
 print("Connection is successful")
 print(ap.ifconfig())
 led.value(1)
-
-config.ip = ap.ifconfig()[0]
 
 # END
 
