@@ -142,6 +142,17 @@ function onMessage(event) {
     inputTempLow.value = tempConfigLower;
   }
 
+  if (type == "history") {
+    let string = values[1].trim();
+    updateHistory("initial", string);
+    console.log("History received:", event);
+  }
+  if (type == "addition") {
+    let string = values[1].trim();
+    updateHistory("addition", string);
+    console.log("Updated history received:", event);
+  }
+
   if (type == "data") {
     // console.log("Temperatures received:", event);
     // Individual Temperatures
@@ -152,9 +163,10 @@ function onMessage(event) {
     let humidity = values[5].trim();
     let unixTime = values[6].trim();
     let tempStatus = values[7].trim();
+    let humStatus = values[8].trim();
 
     // Updates main status
-    updateStatus(tempStatus, 1, avgTemp, humidity); // 1 is a placeholder for humidity status
+    updateStatus(tempStatus, humStatus, avgTemp, humidity);
 
     // Throws remaining values into debug section
     debugValues(temp1, temp2, temp3, avgTemp, unixTime);
@@ -241,7 +253,7 @@ function checkIconStatus(iconType, status, storedStatus) {
   if (status != storedStatus) {
     iconType.classList.remove("stat-good", "stat-bad", "stat-warn");
     if (status == 0) {
-      iconType.classlist.add("stat-good");
+      iconType.classList.add("stat-good");
     } else if (status == 1) {
       iconType.classList.add("stat-warn");
     } else {
@@ -249,5 +261,26 @@ function checkIconStatus(iconType, status, storedStatus) {
     }
   }
   return status;
+}
+/* END */
+
+/* BEGIN History */
+
+const historyField = document.getElementById("history");
+var historyContent = "";
+
+/**
+ * updates the history section with uploaded content, differing between initial or additions
+ * @param {"initial" | "addition"} type defines the method of writing history
+ * @param {string} content the history to be written
+ */
+function updateHistory(type, content) {
+  // Log the content type and value
+  // console.log("Content type:", typeof content);
+  // console.log("Content:", content);
+
+  if (type == "initial") historyContent = content;
+  else if (type == "addition") historyContent = content + "\n" + historyContent;
+  historyField.textContent = historyContent;
 }
 /* END */
