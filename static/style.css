@@ -70,7 +70,7 @@ br {
   margin-top: var(--global-spacing);
   grid-template-areas:
     "header header"
-    "top right"
+    "top    right"
     "bottom right"
     "footer footer";
   gap: var(--global-spacing);
@@ -183,7 +183,8 @@ br {
 .debug {
   opacity: 0;
   max-height: 50px;
-  font-family: mono;
+  font-family: monospace;
+  font-size: 12pt;
 }
 
 .debug.active {

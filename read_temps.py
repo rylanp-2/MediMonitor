@@ -7,8 +7,13 @@ import dht
 # Define the pins used for the thermistors and DHT11
 therm_black = machine.ADC(27)
 thermistor = machine.ADC(26)
-# d = dht.DHT11(machine.Pin(15))
+d = dht.DHT11(machine.Pin(15))
 
+global prev_time, prev_temp1, prev_hum
+
+prev_time = utime.time() - 2
+prev_temp1 = 20
+prev_hum = 50
 
 # Introduce constants used for the thermistor calculations
 room_temp = 298.15
@@ -18,15 +23,34 @@ R0 = 10000
 
 def read_temps():
     
-    # DHT11 code:
-
-#     d.measure()  # Read data from the DHT11
-#     temp1 = d.temperature()  # Store temperature data in variable temp1
-#     hum = d.humidity()  # Store humidity data in variable hum
-
-    hum = 50
-    temp1 = 22
+    global prev_time, prev_temp1, prev_hum
     
+    
+    
+    # DHT11 code:
+    
+    unix_time = utime.time() # Retrieve the the number of seconds since the epoch
+    
+    # Compare the time of this measurement to the time of the last measurement
+    # Update temp1 only if at least 2 seconds have passed since the last request (This is due to hardware constraints of the DHT11)
+    if (unix_time > prev_time + 1):
+        # Handle exceptions if the DHT11 malfunctions for whatever reason
+        try: 
+            d.measure()  # Read data from the DHT11
+            temp1 = d.temperature()  # Store temperature data in variable temp1
+            hum = d.humidity()  # Store humidity data in variable hum
+            prev_time = unix_time
+            prev_temp1 = temp1
+            prev_hum = hum
+        except Exception as e:
+            print("Error reading DHT:", e)
+            temp1 = prev_temp1
+            hum = prev_hum
+        
+    else: # Otherwise use the previous values
+        temp1 = prev_temp1
+        hum = prev_hum
+        unix_time = prev_time
         
 
     # Thermistor 1 (black):
@@ -49,8 +73,6 @@ def read_temps():
     # Calculate the average of the 3 temperatures
     avg_temp = (temp1 + temp2_C + temp3) / 3  # Calculate the average of the temperatures
 
-    
-    unix_time = utime.time() # Retrieve the the number of seconds since the epoch
     data = [temp1, temp2_C, temp3, avg_temp, hum, unix_time] # Put all measured values into a list
 
     return data # Return data as a list of values

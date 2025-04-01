@@ -2,7 +2,7 @@ from microdot_asyncio import Microdot, Response, send_file
 from microdot_utemplate import render_template
 from microdot_asyncio_websocket import with_websocket
 import asyncio
-import boot_RENAME as boot
+import boot
 from read_temps import read_temps, convert_list, hum_status
 from LEDs_test import LEDs
 from history_write import update_history
@@ -120,7 +120,7 @@ async def websocket_handler(request, ws):
         print(f"WebSocket error: {e}")
     finally:
         print(f"WebSocket closed: {request.client_addr}")
-        active_websockets.delete(ws)
+        active_websockets.remove(ws)
 
 
 # Static CSS/JSS

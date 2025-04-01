@@ -15,17 +15,17 @@ def update_history(current_led_value, last_led_value):
         )
 
         if current_led_value == 0:
-            history_file.write(f"Entered safe zone at {formatted_time}\n")
+            history_file.write(f"Entered safe zone at:    {formatted_time}\n")
             history_file.write(file)
             return f"Entered safe zone at:    {formatted_time}\n"
 
         elif current_led_value == 1:
-            history_file.write(f"Entered warning zone at {formatted_time}\n")
+            history_file.write(f"Entered warning zone at: {formatted_time}\n")
             history_file.write(file)
             return f"Entered warning zone at: {formatted_time}\n"
 
         elif current_led_value == 2:
-            history_file.write(f"Entered danger zone at {formatted_time}\n")
+            history_file.write(f"Entered danger zone at:  {formatted_time}\n")
             history_file.write(file)
             return f"Entered danger zone at:  {formatted_time}\n"
 

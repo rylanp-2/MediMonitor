@@ -19,7 +19,7 @@ def LEDs(temp1, temp2, temp3):
             low_bound = int(current_line[1])
 
     #determine the warning range of the system
-    warning_range = (high_bound - low_bound)/4
+    warning_range = (high_bound - low_bound)/10
     high_warning = high_bound - warning_range
     low_warning = low_bound + warning_range
 
