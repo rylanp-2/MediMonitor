@@ -9,9 +9,8 @@ These parameters resulted in our creation of **MediMonitor**, a device that accu
 
 The states of the device are stored in flash memory, allowing it to be recovered in any event of power failure.
 
-![See here for schematic design.](.github/Schematic.pdf)
 
-### Project Distribution
+## Project Distribution
 Each aspect of the design and implementation was developed by all three members, however each member had a focus:
 - **Riley:** Web-UI design and function, Server-Client communications, Device configuration
 - **Rylan:** Server-side hardware interactions, Hardware implementation
@@ -21,6 +20,13 @@ Additionally, each team member:
 - Provided support for each other
 - Collaborated on group presentation/reports
 - Contributed to each aspect of the design process
+
+## Images
+#### User Interface
+![image](.github/UI.png)
+#### Schematic Sketch
+![image](.github/schematic.png)
+
 
 ## Important Note
 All commits to the repository were done by "Tinklman," which was Riley on his computer, as he was tracking all changes to the code. Instead of a shared git repository, files were shared using a syncthing directory and through the Raspberry Pi itself.
